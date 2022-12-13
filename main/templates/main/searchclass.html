@@ -1,0 +1,203 @@
+<!--
+    https://www.w3schools.com/howto/howto_css_dropdown.asp = siting how to make a dropdown menu
+    https://www.w3schools.com/howto/howto_js_dropdown.asp = How to make to drop down menu clickable
+-->
+{% extends 'main/index.html' %}
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        {% load bootstrap5 %}
+        {% bootstrap_css %}
+        {% bootstrap_javascript %}
+        {% block content %}
+        <style>
+            select {
+                -webkit-appearance: none;
+                -moz-appearance: none;
+                -ms-appearance: none;
+                appearance: none;
+                outline: 0;
+                background: #ed874e;
+                background-image: none;
+                border: 1px solid black;
+            }
+            select:disabled{
+                background-color: gray;
+                color: lightgray;
+            }
+            .select {
+                position: relative;
+                display: block;
+                width: 20em;
+                height: 3em;
+                line-height: 3;
+                background: #fff;
+                overflow: hidden;
+                border-radius: .25em;
+            }
+            select {
+                width: 100%;
+                height: 100%;
+                padding: 0 0 0 .5em;
+                color: #fff;
+                cursor: pointer;
+            }
+            select::-ms-expand {
+                display: none;
+            }
+            .select::after {
+                content: '\25BC';
+                position: absolute;
+                top: 0;
+                right: 0;
+                bottom: 0;
+                padding: 0 1em;
+                background: #34495E;
+                pointer-events: none;
+            }
+            .select:hover::after {
+                color: #ADD8E6;
+            }
+
+            option:checked {
+                color: #000080;
+            }
+            option:disabled {
+                color: black;
+            }
+
+            input[type=text] {
+                padding:5px;
+                border:2px solid #ccc;
+                -webkit-border-radius: 5px;
+                border-radius: 5px;
+            }
+
+            input[type=text]:focus {
+                border-color:#333;
+            }
+
+            input[type=submit] {
+                padding:5px 15px;
+                background:#ed874e;
+                border:0 none;
+                cursor:pointer;
+                color: #fff;
+                -webkit-border-radius: 5px;
+                border-radius: 5px;
+            }
+        </style>
+    </head>
+    {% if shoppingCartMessage != "" %}
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <strong>Course Not Added</strong> {{shoppingCartMessage}}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+{% endif %}
+    <h1 class='text-center mt-4'>
+        Course Search <i class='bx bx-search' style= "margin-top: 3px; margin-right: 5px;"></i>
+    </h1>
+    <div class = "text-center ms-5">
+        <p style = " width: 100%; text-align: center;"> Start by selecting the department of your choosing.
+            Then, you are open to filter results by instructor, class type, or credits, and add classes to your shopping cart.</p>
+    </div>
+    <div class='ms-5' style='height: 10%;'>
+        <div class="select">
+            <form name="depSelect" method="GET">
+                <select name="depSelect" onchange="this.form.submit()">
+                    <option style="font-weight: bold" selected="selected" disabled>Departments</option>
+                    {% for dep in department_results %}
+                        <option style="font-weight: bold" value="{{dep.abbreviation}}" {%if department == dep.abbreviation%} selected {%endif%} >{{dep.abbreviation}}</option>
+                    {% endfor %}
+                </select>
+        </div>
+        <div class="select" style = "position:relative; left:325px; top:-48px">
+                <select name = "instructor" {%if noDepartment%} disabled {%endif%}>
+                    <option style="font-weight: bold" selected="selected" value="none" > Instructor</option>
+                    {% for instructor in instructors %}
+                        <option style="font-weight: bold" value="{{instructor}}" {%if instructorChosen == instructor%} selected {%endif%}>{{instructor}}</option>
+                    {% endfor %}
+                </select>
+        </div>
+        <div class="select" style = "position:relative; left:650px; top:-96px">
+                <select name = "classType" {%if noDepartment%} disabled {%endif%}>
+                    <option style="font-weight: bold" selected="selected" value = "none"> Class Type</option>
+                    <option style="font-weight: bold" value="LAB" {%if classTypeChosen == "LAB" %} selected {%endif%} >Lab</option>
+                    <option style="font-weight: bold" value="LEC" {%if classTypeChosen == "LEC" %} selected {%endif%} >Lecture</option>
+                    <option style="font-weight: bold" value="IND" {%if classTypeChosen == "IND" %} selected {%endif%} >Independent Study</option>
+                </select>
+        </div>
+        <div class="select" style = "position:relative; left:975px; top:-144px">
+                <select name = "credits" {%if noDepartment%} disabled {%endif%}>
+                    <option style="font-weight: bold" selected="selected" value = "none"> Credits</option>
+                    <option style="font-weight: bold" value="1" {%if creditsChosen == "1" %} selected {%endif%} >1</option>
+                    <option style="font-weight: bold" value="2" {%if creditsChosen == "2" %} selected {%endif%} >2</option>
+                    <option style="font-weight: bold" value="3" {%if creditsChosen == "3" %} selected {%endif%} >3</option>
+                </select>
+        </div>
+            <input type="submit" style = "position:relative; left:1300px; top:-185px" {%if noDepartment%} disabled {%endif%} name="submitbtn" value="Select">
+        </form>
+    </div>
+    <div class="d-flex ms-3 me-5">
+        <div class="flex-fill">
+            <ul style="list-style-type: none;">
+            {% for class in course_list_nodup %}
+                <li class="my-2 d-flex" style="background-color:rgb(230, 230, 230); width: 95%;">
+                    <a href="https://thecourseforum.com/course/{{ class.subject }}/{{ class.catalog_number }}/"
+                    title="View TCForum" style="background-image: linear-gradient(45deg, #C0EBF3, #F3D8C0); color:black;" class="py-1 px-2 fs-4 me-0 d-inline-block">{{ class.subject }}{{ class.catalog_number }}</a>
+                    <div style="background-image: linear-gradient(45deg, #746CC0, #58427C)"; class="d-inline-block py-1 fs-4 px-3 flex-fill text-white">{{ class.description }}</div>
+                </li>
+                    {% for classinfo in course_list %}
+                    {% comment %} this is one section of the class therefore we are going to print some info about it {% endcomment %}
+                    {% if classinfo.catalog_number == class.catalog_number %}
+                    <ul class='classBorder' style="font-size:14px;">
+                        <li class ="displayClass" style="width:9%;">{{ classinfo.course_number  }} &nbsp &nbsp &nbsp &nbsp</li>
+                        <li class="displayClass">{{ classinfo.instructor.name  }} &nbsp &nbsp &nbsp &nbsp</li>
+                        <li class="displayClass">{{ classinfo.enrollment_total }}/{{ classinfo.class_capacity }} Enrolled &nbsp &nbsp &nbsp &nbsp</li>
+                        <div class="displayClass">{{ classinfo.meetings.days  }}</div>
+                                {% comment %} #array access in django template with .index {% endcomment %}
+                                <div class="displayClass">{{ classinfo.meetings.0.days  }}</div>
+                                {% if classinfo.meetings.0.start_time %}
+                                    <div class="displayClass">{{ classinfo.meetings.0.start_time  }} - {{ classinfo.meetings.0.end_time}}&nbsp &nbsp &nbsp &nbsp</div>
+                                {% else %}
+                                    <div class="displayClass">No Set Meeting Times - </div>
+                                {% endif %}
+                                <div class="displayClass">{{ classinfo.meetings.0.facility_description  }}&nbsp &nbsp &nbsp &nbsp</div>
+                                <div class="displayClass">{{ classinfo.component        }}</div>
+                                <div class="displayClass">({{ classinfo.units            }} Credits)</div>
+                                {% if user.is_authenticated %}
+                            <div class='float-end'>
+                                <div class="cart">
+                                    <a href="/main/coursecatalog/addclass/{{class.subject}}/{{classinfo.course_number}}/0/" class='text-success me-3' id="addCourse">Add to Cart</a>
+                                </div>
+                            </div>
+                        {%endif%}
+                        </ul>
+                    {% endif %}
+                {% endfor %}
+            {% endfor %}
+            {% if not course_list_nodup and not noDepartment%} <h2> No courses found </h2> {%endif%}
+            </ul>
+
+        </div>
+        {% if user.is_authenticated %}
+        <div class='me-5' style="width:23%; height:10%; position:sticky; top:100px;" id='shoppingCart'>
+            <div class='text-white text-center px-3 py-1 fw-bold mt-2' style='background-image: linear-gradient(45deg, #A7ACD9, #9E8FB2);'>  <i class='bx bx-cart' style= "margin-top: 3px; margin-right: 5px;"></i>Shopping Cart || {{creditAmount}} Credits</div>
+                    {% for classAdded in classesInCart %}
+                        <div class='text-center py-1' style="background-color:#f2f2f2; border-bottom: 1px solid;">{{classAdded.department}} {{classAdded.catalogNumber}} ({{classAdded.lectureType}}) {{classAdded.meeting_days}}: {{classAdded.start_time}}-{{classAdded.end_time}}
+
+                        {% comment %} 0 means it is coming from the searchClass page {% endcomment %}
+                        <a href="/main/coursecatalog/removeclass/{{classAdded.department}}/{{classAdded.id}}/0/" class="float-end me-4 fw-bold" id="removeClass" style= "color: #db5151;" >X</a></div>
+                    {% comment %} If the list is empty {% endcomment %}
+                    {% empty %}
+                        <div class='p-2 text-center' style="background-color:#f2f2f2; border-bottom: 1px solid;">Your shopping cart is empty.</div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+    </div>
+    {% endblock content %}
+    </body>
+</html>

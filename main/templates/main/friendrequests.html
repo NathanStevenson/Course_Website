@@ -1,0 +1,15 @@
+{% extends 'main/index.html' %}
+    {% block content %}
+    <div class='friendBorder'>
+        <h1> Incoming Friend Requests:</h1>
+        {% for request in friend_requests %}
+            <div class='border border-muted border-3 py-2 px-1 rounded-3 mx-4 my-3 d-flex'>
+                <div class='friendRequest'>{{request.from_user}}:</div>
+                <div class='me-5'>
+                    <a href="/main/friendrequests/accept/{{request.from_user.id}}/" class='accept'> Accept</a>
+                    <a href="/main/friendrequests/delete/{{request.from_user.id}}/" class='decline' >Decline</a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    {% endblock content %}

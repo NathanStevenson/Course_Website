@@ -1,0 +1,31 @@
+{% extends 'main/index.html' %}
+<html>
+    {% block content %}
+        <body>
+            <div class="centerDivElement">  
+                <h1 class="centerDivElement" style="margin-bottom:1%;"> Course Catalog &nbsp<i class='bx bx-list-ul' style= "margin-top: 3px; margin-right: 5px;"></i> </h1>
+            </div>
+            <div class = "text-center">
+                <p style = " margin-left: 25%; width: 50%; text-align: left; justify-content: center;"> Course Subject Abbreviations are alphabetically organized below.
+                    Click on the dropdown menu and select the subject you want to enroll in. You will be able to add classes to your shopping cart.  </p>
+            </div>
+            <div class= text-center>
+            {% for category, depList in department_results.items %}
+                <div class="dropdown">
+                    <button class="btn btn_1 fw-bold" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+                        {{ category }}
+                    </button>
+                    <div class="dropdown-menu w-50" aria-labelledby="dropdownMenuButton2">
+                    {% for dep in depList %}
+                        {% if forloop.first %}<div class="row">{% endif %}
+                            <div class="w-25">
+                                <a href="{{ dep.abbreviation }}" class="dropdown-item" style="color: black">{{ dep.abbreviation }}</a>
+                            </div>
+                        {% if forloop.counter|divisibleby:4 %}</div><div class="row">{% endif %}
+                    {% endfor %}
+                    </div> 
+                </div>
+            {% endfor %}   
+        </body>
+    {% endblock %}
+</html>

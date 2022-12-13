@@ -1,0 +1,71 @@
+
+{% extends 'main/index.html' %}
+{% load mathfilters %}
+<html>
+    {% block content %}
+    <body>
+        {% if shoppingCartMessage != "" %}
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong>Course Not Added</strong> {{shoppingCartMessage}}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endif %}
+
+        <div class="d-flex ms-3 me-5">
+            <div class="mt-4 flex-fill">
+                <ul style="list-style-type: none;">
+                {% for class in course_list_nodup %}
+                    <li class="my-2 d-flex" style="background-color:rgb(230, 230, 230); width: 95%;">
+                        <a href="https://thecourseforum.com/course/{{ class.subject }}/{{ class.catalog_number }}/"
+                        title="View TCForum" style="background-image: linear-gradient(45deg, #C0EBF3, #F3D8C0); color:black;" class="py-1 px-2 fs-4 me-0 d-inline-block">{{ class.subject }}{{ class.catalog_number }}</a>
+                        <div style="background-image: linear-gradient(45deg, #746CC0, #58427C)" class="d-inline-block py-1 fs-4 px-3 flex-fill text-white">{{ class.description }}</div>
+                    </li>
+                    {% for classinfo in course_list %}
+                        {% comment %} this is one section of the class therefore we are going to print some info about it {% endcomment %}
+                        {% if classinfo.catalog_number == class.catalog_number %}
+                        <ul class='classBorder'
+                            style="font-size: 14px;">
+                                <div class="displayClass">{{ classinfo.course_number  }}&nbsp &nbsp &nbsp &nbsp</div>
+                                <div class="displayClass">{{ classinfo.instructor.name  }}&nbsp &nbsp &nbsp &nbsp</div>
+                                <div class="displayClass">{{ classinfo.enrollment_total }}/{{ classinfo.class_capacity }} Enrolled &nbsp &nbsp &nbsp &nbsp</div>
+                                <div class="displayClass">{{ classinfo.meetings.days  }}</div>
+                                {% comment %} #array access in django template with .index {% endcomment %}
+                                <div class="displayClass">{{ classinfo.meetings.0.days  }}</div>
+                                {% if classinfo.meetings.0.start_time %}
+                                    <div class="displayClass">{{ classinfo.meetings.0.start_time  }} - {{ classinfo.meetings.0.end_time}}&nbsp &nbsp &nbsp &nbsp</div>
+                                {% else %}
+                                    <div class="displayClass">No Set Meeting Times - </div>
+                                {% endif %}
+                                <div class="displayClass">{{ classinfo.meetings.0.facility_description  }}&nbsp &nbsp &nbsp &nbsp</div>
+                                <div class="displayClass">{{ classinfo.component        }}</div>
+                                <div class="displayClass">({{ classinfo.units            }} Credits)</div>
+                                {% if user.is_authenticated %}
+                                    <div class='float-end'>
+                                        <a href="/main/coursecatalog/addclass/{{class.subject}}/{{classinfo.course_number}}/1/" class='text-success me-3' id="addCourse">Add to Cart</a>
+                                    </div>
+                                {%endif%}
+                                </ul>
+                        {% endif %}
+                    {% endfor %}
+                {% endfor %}
+                </ul>
+            </div>
+            {% if user.is_authenticated %}
+            <div class='mt-4 me-5' style="width:25%; height:10%; position:sticky; top:100px;" id='shoppingCart'>
+                <div class='text-white text-center px-3 py-1 fw-bold mt-2' style='background-image: linear-gradient(45deg, #A7ACD9, #9E8FB2);'>  <i class='bx bx-cart' style= "margin-top: 3px; margin-right: 5px;"></i> Shopping Cart || {{creditAmount}} Credits</div>
+                    {% for classAdded in classesInCart %}
+                        <div class='text-center py-1' style="background-color:#f2f2f2; border-bottom: 1px solid;">{{classAdded.department}} {{classAdded.catalogNumber}} ({{classAdded.lectureType}}) {{classAdded.meeting_days}}: {{classAdded.start_time}}-{{classAdded.end_time}}
+
+                        {% comment %} coming from 1  {% endcomment %}
+                        <a href="/main/coursecatalog/removeclass/{{classAdded.department}}/{{classAdded.id}}/1/" class="float-end me-4 fw-bold" id="removeClass" style= "color: #db5151;" >X</a></div>
+                    {% comment %} If the list is empty {% endcomment %}
+                    {% empty %}
+                        <div class='p-2 text-center' style="background-color:#f2f2f2; border-bottom: 1px solid;">Your shopping cart is empty.</div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </body>
+    {% endblock content %}
+</html>

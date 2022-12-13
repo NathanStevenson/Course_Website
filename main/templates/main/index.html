@@ -1,0 +1,144 @@
+{% load socialaccount %}
+{% load static %}
+
+       
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+<link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
+<link rel="stylesheet" href="{% static 'main/index/style.css'%}?{% now "U" %}">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Overpass:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>CourSelect</title>
+        <link rel="icon" type="image/x-icon" href= "{% static "main/images/CourSelect Favicon.svg" %}">
+        {% load bootstrap5 %}
+        {% bootstrap_css %}
+        {% bootstrap_javascript %}
+    </head>
+    <body>
+        <script>
+            if (localStorage.darkMode) document.documentElement.setAttribute("darkMode", localStorage.darkMode)
+        </script>
+        
+        <header class="headBlock"
+        style="position: sticky; top: 0px; z-index: 1000;">
+            {% load static %}
+            <div>
+                <!-- <a href="/main/" --> 
+                <a href="/main/"> <img src="{% static "main/images/CourSelect.svg" %}" class="d-inline-block ms-5 pb-2" style="width:150px; height:75px;" alt="UVA" />
+                <a href="/main/coursecatalog/" class="a_links" 
+                {% if tab == 'coursecatalog' %}style="selected"{% endif %}> <i class='bx bx-list-ul' style= "margin-top: 3px; margin-right: 5px;"></i>
+                Course Catalog</a>
+                
+                <a href="/main/searchclass/" class="a_links"
+                {% if tab == 'searchclass' %}style="selected"{% endif %}> <i class='bx bx-search' style= "margin-top: 3px; margin-right: 5px;"></i>
+                Class Search</a>
+                
+                <a href="/main/myschedule/" class="a_links"
+                {% if tab == 'myschedule' %}style="selected"{% endif %}> <i class='bx bx-calendar-edit' style= "margin-top: 3px; margin-right: 5px;"></i>
+                My Schedule</a>
+
+                <div class="header_moon" style= "margin-left: 0px;" onclick="setDarkMode()" aria-label="Toggle Dark Mode">
+                    <i class='bx bx-moon'></i>
+                  </div>
+
+            {% if user.is_authenticated %}
+                <div class="d-inline-block float-end me-4 dropdown position-relative">
+                    <button class="btn dropdown-toggle position-relative mt-2" type="button" id="dropdownMenuButton1" 
+                    data-bs-toggle="dropdown" aria-expanded="false" style="height: 70%; cursor:pointer; color:white;">
+                        <img src="{{user.socialaccount_set.all.0.extra_data.picture}}" 
+                        alt="Welcome, {{user.socialaccount_set.all.0.extra_data.given_name}}"
+                        class="position-relative" id="profile"
+                        style="height: 100%; border-radius: 50%;"/>
+                    </button>
+                    <ul class="dropdown-menu" style="position: relative;">
+                        <li><a class="disabled dropdownItem text-dark" href="#">Welcome, {{user.socialaccount_set.all.0.extra_data.given_name}}!</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdownItem" href="/main/profile/{{user.id}}/">Profile</a></li>
+                        <li><a class="dropdownItem" href="/main/friends/{{user.id}}">Friends</a></li>
+                        <li><a class="dropdownItem" href="/main/addfriend/">Add Friends</a></li>
+                        <li><a class="dropdownItem" href="/main/friendrequests/">Friend Requests <p class="d-inline text-white bg bg-danger fw-bold rounded-circle px-1 pb-1">{{numFriendRequests}}</p> </a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdownItem" href="/accounts/logout/">Logout</a></li>
+                    </ul>
+                </div>
+            {% else %}
+            <div class="d-inline-block float-end pt-3 mt-1 me-5 position-relative">
+                <a href="{% provider_login_url 'google' %}" class="a_links"
+                style=" position:relative; text-decoration:none; cursor:pointer; width:100%">Sign In</a>
+            </div>
+            {% endif %}
+        </div>
+    </header>
+        {% comment %} The above code is the navbar and then below we can add the content for each page inside block content tag {% endcomment %}
+        {% block content %}
+        <body>
+        <div class="page_intro intro">
+            <div class="intro_container container">
+              <div class="intro_body">
+                <div class="intro_content">
+                  <h1 class="intro_title"> <b>Welcome to </b> <br> <span>Cour</span><span1>Select</span1></h1>
+                  <h1 class="intro_position"> A UVA Course Builder <br>for <b>students</b>, by <b>students</b></h1>
+                  <br1>
+                  <div class="typewriter">   
+                    <div class = "static" > Pick Your <br1>
+                    <span>Perfect</span> Class in </div>
+                    <ul class="types">
+                        <li><span1>Science</span1></li>
+                        <li><span1>Math</span1></li>
+                        <li><span1>Business</span1></li>
+                        <li><span1>English</span1></li>
+                        <li><span1>History</span1></li>
+                    </ul>
+
+                    <div>
+                        <a href="/main/searchclass/" title="" class="btn" style="color:white; font-weight:700;">Search Class</i></a>
+                    </div>
+
+                </div>   
+            </div>     
+            <div class = "intro_img">
+                <img src="/static/main/images/courselectHome.png">
+            </div>
+        </div> 
+        </div>
+        </div>
+    </body>
+        </div>
+    </div>
+        {% endblock content %}
+</header>
+     <!-- <script src="index/script.js">
+    </script> -->
+<script>
+            let darkMode = localStorage.getItem('darkMode');
+            let darkToggle = document.querySelector('.header_moon');
+            let bodyToggle = document.querySelector('body');
+
+            if (darkMode && darkMode === '1') {
+                bodyToggle.classList.add('night');
+                darkToggle.classList.add('is-active');
+            }
+
+                darkToggle.onclick = function() {
+                bodyToggle.classList.toggle('night');
+                darkToggle.classList.toggle('is-active');
+                if (darkMode) {
+                    if (darkMode === '1') {
+                        localStorage.setItem('darkMode', '0');
+                    } else {
+                        localStorage.setItem('darkMode', '1');
+                    }
+                } else {
+                    localStorage.setItem('darkMode', '1');
+                }
+        };
+
+</script>
+
+    </body>
+</html>

@@ -1,0 +1,80 @@
+{% extends 'main/index.html' %}
+
+{% block content %}
+    {% if user.is_authenticated %}
+
+    {% comment %} Alert System {% endcomment %}
+    {% if shoppingCartMessage != "" %}
+        {% comment %} course not added {% endcomment %}
+        {% if shoppingCartMessage == "Another section of the same course was already in your cart!"%}
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong>Course Not Added</strong> {{shoppingCartMessage}}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% else %}
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <strong>Course Added</strong> {{shoppingCartMessage}}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endif %}
+    {% endif %}
+
+    <p class="fw-bold text-center mt-2 fs-4">{{theUser.name}}'s Schedule  &nbsp </p>
+
+    <div class="mt-2 flex-fill mb-3">
+        <div class='w-75 mx-auto' style="list-style-type: none;">
+            {% for day, classesList in schedule_courses.items %}
+                <div class='ps-2 py-1'
+                style="background-color: {% if forloop.counter|divisibleby:2 %}lightcyan
+                    {% else %} rgb(255, 221, 153) {% endif %};">
+                    <h3> {{day}}</h3>
+                    {% for classinfo in classesList %}
+                    <li>
+                        <div class="d-inline">{{ classinfo.department  }}</div> 
+                        <div class="d-inline">{{ classinfo.catalogNumber  }} ({{classinfo.lectureType}}):</div> 
+                        <div class="d-inline">{{ classinfo.description  }} :</div> 
+                        <div class="d-inline">{{ classinfo.start_time|slice:":5"}} - {{classinfo.end_time|slice:":5"}}</div>
+                        <div class='float-end'>
+                            <a href="/main/coursecatalog/addclass/{{classinfo.department}}/{{classinfo.id}}/2/{{theUser.id}}" class='text-success me-3' id="addCourse">Add to Cart</a>
+                        </div>
+                    </li>
+                    {%endfor%}
+                </div>
+            {% endfor %}
+            <div style='background-color:#ed874e; width:85%;'> <i class='bx bx-cart' style="font-size: 24px;"></i> <p style="margin-top:5px; margin-bottom: 5px; margin-right: 5px; font-size: 24px; display:inline-flex;">Total Credits</p>
+                <p class="float-end me-4 fw-bold" style='margin-top:12px;display:inline-flex;'> {{scheduledCredits}} Credits </p>
+        </div>
+    </div>
+    
+    {% comment %} Adding commenting on schedule functionality {% endcomment %}
+    <div class="w-75 mx-auto">
+        <p class='fs-3 fw-bold'>Friends Comments</p>
+    </div>
+    {% if hasComment %}
+        <div class="border border-dark border-2 rounded-2 w-75 mx-auto mb-3 p-1">
+            {% for comment in allComments %}
+                <div class="bg-gradient p-1 mt-1 rounded-top d-flex justify-content-between" style="background-color: mediumslateblue">
+                    <div>{{ comment.author }}</div>
+                    {% if comment in activeUser_comments %}
+                        <a class="text-danger fw-bold me-3" title="Delete Comment" href="/main/deleteowncomment/{{comment.id}}/{{theUser.id}}/">X</a>
+                    {% endif %}
+                </div>
+                <div class="p-1 mb-2 rounded-bottom" style="background-color: lightskyblue;">{{ comment.commentBody }}</div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p class='fw-bold text-center'>This schedule has no comments. Be the first to comment below!</p> 
+    {% endif %}
+
+    <form class='leavecomment' method="GET">
+        <div class='input-group w-75 mx-auto'>
+            <input class='p-2 rounded-2 form-control' 
+            name='commentbody' type='text' placeholder='Leave a comment...' />
+            <button type="submit" class="btnSearchFriend fw-bold py-1 px-3">
+                Post
+            </button>
+        </div>
+    </form>
+    {% endif %}
+    
+{% endblock content %}

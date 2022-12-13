@@ -1,0 +1,43 @@
+{% extends 'main/index.html' %}
+
+<html>
+    <body>
+        {% block content%}
+        <div class="profileBorder">
+            {% comment %} Add a back button if the user is looking at someone else profile {% endcomment %}
+            <h1 class="text-center">{{ theUser.name }}</h1>
+            {% comment %} Displays each users profile and their friends {% endcomment %}
+            <p class='my-1 fw-bold d-inline-block'>Friends: <a href='/main/friends/{{theUser.id}}/' style='color:#ed874e;'>{{theUser.numFriends}}</a></p>
+            <div>
+                {% if isFriend == True %}
+                <p class='my-1 d-inline-block'> <b>Email: </b> {{theUser.email}}</p>
+                <br>
+                {% endif %}
+                <p class='my-1 d-inline-block'> <b> Major: </b> {{theUser.major}}</p>
+                <p class='my-1 fd-inline-block'> <b>Graduation Year: </b>{{theUser.graduationYear}}</p>
+            </div>
+            <p class='my-1 fw-bold'>Summary:</p>
+            <p class="border border-dark rounded-3 p-2">{{ theUser.summary }}</p>
+            
+            {% if user.id == theUser.id %}
+            {% comment %} Will take user to edit their profile need to think about how to do this {% endcomment %}
+            <a href='/main/profile/edit/' class='fw-bold p-2 rounded-3' style='background-color:#33658A'>Edit Profile</a>
+            {% comment %} can only send friend requests to other users you are not friends
+            with yet {% endcomment %}
+            {% elif user.id != theUser.id and isFriend == False %}
+            <form class='send_friend_req' method="POST">
+                {% csrf_token %}
+                <button type="submit" class="btnFriend d-inline-block">
+                    Send Friend Request
+                </button>
+                <div class='d-inline-block' style="color: 33658A;">
+                    {{ messageSent }}
+                </div>
+            </form>            
+            {% endif %}
+            </div>
+
+
+        {% endblock content %}
+    </body>
+</html>

@@ -1,0 +1,762 @@
+
+/* Good notes about CSS */
+/* This style sheet is only meant to be imported to the corresponding index.html page */
+/* Any styles written inline will overwrite any styles written in this file */
+/* Best to get VSCode extensions for CSS so that color selection and auto-fill is nice */
+@import url('https://fonts.googleapis.com/css2?family=Overpass:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+/* FOR ALL GRADIENTS, I REFERENCED https://www.eggradients.com/ FOR INSPIRTAION */
+/* All a tags within a div on hover */
+:root {
+    --primary-color: #ed874e;
+    --white-color: #FFFFFF;
+    --text-color: #484848;
+    --gray-color: #888888;
+    --invert-primary-color: #EB5F0C;
+    --invert-text-color: #FFFFFF;
+    --invert-bg-color: #2B3137;
+    --square-color: #EB5F0C;
+    --font-family: "Overpass", Arial, Helvetica, sans-serif;
+}
+
+.night h1{
+    color: white;
+}
+.night h2{
+    color: white;
+}
+
+.night h3{
+    color: white;
+}
+
+.night h4{
+    color: white;
+}
+.night p{
+    color: white;
+}
+
+.night a{
+    color:white;
+}
+
+.headBlock {
+    width: 100%; 
+    height: 10%; 
+    background: var(--invert-bg-color);
+    box-shadow: 0px 5px 20px rgba(0,0,0,.5);
+    transition: .3s;
+    position: sticky; 
+    top: 0px; 
+    z-index: 1000;
+}
+
+.container {
+    max-width: 1500px;
+    padding:  10px;
+    width: 100%;
+    margin: 0 auto;
+    transition: .3s;
+    display: flex;
+}
+.container_flex {
+    max-width: 1200px;
+    padding:  10px;
+    width: 100%;
+    margin: 0 auto;
+    display: flex;
+    transition: .3s;
+  }
+
+
+.header_moon {
+    display: inline-flex;
+    align-items: center;
+    font-size: 24px;
+    color: var(--white-color);
+    cursor: pointer;
+    transition: .3s;
+    transition: .3s;
+  }
+
+.textTitle {
+    color: var(--text-color);
+    text-align: center;
+    margin-left: .5rem;
+    display: inline-block;
+    margin-top: 1rem;
+}
+
+.night .textTitle {
+    color: white;
+}
+
+.btn {
+    color: white;
+}
+.night .btn {
+    color:white;
+}
+
+/* https://codepen.io/pirrera/pen/bqVeGx */
+
+.btn:hover {
+    background-position: right center; /* change the direction of the change here */
+  }
+
+.btn_1 {
+    border-radius: 5px;
+    font-weight: 700;
+    margin-bottom: .5rem;
+    width: 50%;
+    height: 35px;
+    white-space: nowrap;
+    display: inline-block;
+    text-align: center;
+    text-decoration: none;
+    background-image: linear-gradient(to right, #F9D976 0%, #fda085 51%, #F39F86 100%);
+  }
+
+
+.signIn {
+    position: relative;
+    text-decoration: none;
+    cursor: pointer;
+    width: 100%;
+    box-sizing: border-box;
+    color: white;
+    display: inline-block;
+}
+.a_links{
+    padding: 0 10px 0 10px;
+    color:white;
+    display: inline-flex;
+    position: relative;
+    transition: .3s;
+    font-family: "Overpass", Arial, Helvetica, sans-serif;
+    font-size: 16px;
+    font-weight: 400; 
+}
+.selected{
+    font-weight: 700;
+    margin-top: 10px;
+}
+/* .night .a_links{
+    color: white;
+} */
+/* animations */
+.a_links::after{
+    opacity: 0;
+    transition: transform 0.3s ease;
+    position: absolute;
+    left: 0;
+    bottom: 0px;
+    width: 0;
+    height: 2px;
+    width: 90%;
+    margin-left: 5%;
+    margin-right: 5%;
+    /* important */
+    background:var(--text-color);
+    border-radius: 2px;
+    transition: .5s;
+    content: '';
+    transform: scale(0, 1);
+    transform-origin: 0% 100%;
+}
+
+.night .a_links::after{
+    opacity: 0;
+    transition: transform 0.3s ease;
+    position: absolute;
+    left: 0;
+    bottom: 0px;
+    width: 0;
+    height: 2px;
+    width: 90%;
+    margin-left: 5%;
+    margin-right: 5%;
+    /* important */
+    background:var(--white-color);
+    border-radius: 2px;
+    transition: .5s;
+    content: '';
+    transform: scale(0, 1);
+    transform-origin: 0% 100%;
+}
+.addFriends{
+    padding: 0 10px 0 10px;
+    color:var(--text-color);
+    display: inline-flex;
+    position: relative;
+    transition: .3s;
+    font-family: "Overpass", Arial, Helvetica, sans-serif;
+    font-size: 16px;
+    font-weight: 400; 
+}
+
+.night .addFriends{
+    padding: 0 10px 0 10px;
+    color:var(--white-color);
+    display: inline-flex;
+    position: relative;
+    transition: .3s;
+    font-family: "Overpass", Arial, Helvetica, sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    
+}
+.selected{
+    font-weight: 700;
+    margin-top: 10px;
+}
+/* animations */
+.addFriends::after{
+    opacity: 0;
+    transition: transform 0.3s ease;
+    position: absolute;
+    left: 0;
+    bottom: 0px;
+    width: 0;
+    height: 2px;
+    width: 90%;
+    margin-left: 5%;
+    margin-right: 5%;
+    /* important */
+    background: var(--text-color);
+    border-radius: 2px;
+    transition: .5s;
+    content: '';
+    transform: scale(0, 1);
+    transform-origin: 0% 100%;
+}
+
+.night .addFriends::after{
+    opacity: 0;
+    transition: transform 0.3s ease;
+    position: absolute;
+    left: 0;
+    bottom: 0px;
+    width: 0;
+    height: 2px;
+    width: 90%;
+    margin-left: 5%;
+    margin-right: 5%;
+    /* important */
+    background: var(--text-color);
+    border-radius: 2px;
+    transition: .5s;
+    content: '';
+    transform: scale(0, 1);
+    transform-origin: 0% 100%;
+}
+
+/* .a_links:hover {
+    display: inline-flex;
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -10px;
+    width: 0;
+    height: 4px;
+    /* important */
+    /* background: var(--primary-color);
+    border-radius: 2px;
+    transition: .3s;
+  } */ 
+
+  .a_links:hover::after {
+    opacity: 1;
+    transform: scale(1, 1);
+    
+  }
+
+  
+
+
+body {
+    padding: 0;
+    box-sizing: border-box;
+    transition: .3s;
+}
+
+body.night{
+    background: var(--invert-bg-color);
+    transition: .3s;
+}
+
+.header_moon {
+    color:white;
+    transition: .3s;
+}
+
+/* .night .header_moon {
+    color: var(--white-color);
+  } */
+
+.intro_title{
+    margin: 20px 20px 20px 20px;
+    font-size: 64px;
+}
+.night .intro_title .h1{
+    color: (var(--white-color));
+    font-size: 64px;
+}
+
+
+.selected {
+    font-family: "Overpass", Arial, Helvetica, sans-serif;
+    display: inline-flex;
+    font-weight: 900; 
+    font-size:18px;
+    text-decoration: underline;
+    display: flex;
+
+}
+a:active{
+    color:rgb(163, 163, 163);
+}
+/* All a tags inside of a div in general */
+div a{
+    color: rgb(255, 255, 255);
+    text-decoration: none;
+}
+/* Accesses any object with the ID "dropdownMenuButton1" */
+#dropdownMenuButton1 {
+    box-shadow: none;
+}
+
+#removeClass:hover {
+    color:red;
+}
+
+.col{
+    background-color: lightsteelblue;
+    border: 1px solid black;
+}
+/* INTRO BODY */
+.intro {
+    min-height: calc(80vh - 80px);
+    display: flex;
+    align-items: center;
+    margin-top: 50px;
+    margin-left: 150px;
+  }
+.intro_body {
+    display:flex;
+}
+.intro_title {
+    font-size: 48px;
+}
+.intro_title span {
+    color: var(--primary-color);
+    transition: .3s;
+    font-weight: 800;
+    font-size: 84px;
+  }
+.intro_title span1 {
+    color: #3F88C5;
+    transition: .3s;
+    font-weight: 800;
+    font-size: 84px;
+  }
+
+.intro_position {
+    display: block;
+    font-weight: 500;
+    font-size: 24px;
+    color: var(--primary-color);
+    margin-bottom: 25px;
+    margin-left: 25px;
+  }
+
+.intro_text {
+    font-size: 16px;
+    line-height: 1.3;
+    color: var(--text-color);
+    margin-bottom: 30px;
+    transition: .3s;
+  } 
+
+.intro_content{
+    max-width: 60%;
+    width: 100%;
+    padding-right: 20px;
+}
+
+.intro_img {
+    max-width: 40%;
+    width: 90%;
+    height: 80%;
+    margin-right: 100px;
+  }
+
+.intro_img img {
+    display: block;
+    width: 90%;
+}
+  
+br1 {
+    display: block;
+    margin: -20px 0;
+}
+  /* Typewriter effect CODE: https://www.codeply.com/go/orizmNWvT3/css-only-typing-animation-with-multiple-words */
+.typewriter {
+    display: flex;
+}
+
+.typewriter .static {
+    color: primar;
+    font-size: 48px;
+    font-weight: 500;
+    margin-left: 25px;
+    margin-right: -20px;
+}
+
+.night .typewriter .static {
+    color: white;
+    font-size: 48px;
+    font-weight: 500;
+    margin-left: 25px;
+    margin-right: -20px;
+}
+.typewriter span {
+    color: #3F88C5;
+    font-weight: 800;
+}
+
+.typewriter span1 {
+    color: var(--primary-color);
+    font-weight: 800;
+}
+
+
+.typewriter .types{
+    line-height: 90px;
+    height: 80px;
+    overflow: hidden; 
+    margin-top: 43px;
+}
+
+.types li{
+    list-style: none;
+    font-weight: 800;
+    font-size: 48px;
+    position:relative;
+    top: 0;
+    animation: slide 15s steps(5)
+    infinite;
+    }
+
+.types li {
+    position: relative;
+}
+
+.types li::after{
+    content: "";
+    position:absolute;
+    font-size: 36px;
+    height: 100%;
+    width: 100%;
+    animation: typing 3s steps(10) 
+    infinite;
+    border-left: 3px solid #d95e16;
+    left: 0;
+    background: white;
+    }
+
+.night .types li::after{
+    content: "";
+    position:absolute;
+    font-size: 36px;
+    height: 100%;
+    width: 100%;
+    animation: typing 3s steps(10) 
+    infinite;
+    border-left: 3px solid #d95e16;
+    left: 0;
+    background: #2B3137;
+        }
+
+  /* The typing effect */
+  @keyframes typing {
+    40%,
+    60% {
+        left: calc(100% + 30px);
+    }
+    100%{
+        left: 0;
+    }
+  }
+
+  @keyframes slide{
+    100%{
+        top: -450px;
+    }
+  }
+
+
+#addCourse:hover {
+    text-decoration: underline;
+}
+
+.intro_container .btn{
+    display: inline-flex;
+    background: var(--primary-color);
+    box-shadow: 0 5px 0 #b74f13;
+    border-radius: 30px;
+    padding: 5px 16px;
+    font-weight: 500;
+    font-size: 16px;
+    color: var(--text-color);
+    transition: .3s;
+    position: absolute;
+    z-index: 10;
+    top: 80%;
+    left: 13%;
+  }
+  
+  .intro_container .btn:active{
+    box-shadow: none;
+    transform: translateY(5px);
+  }
+  .intro_img .btn .bx {
+    font-size: 24px;
+  }
+
+  .cart .btn{
+    display: inline-flex;
+    background: var(--primary-color);
+    box-shadow: 0 5px 0 #b74f13;
+    border-radius: 30px;
+    padding: 5px 16px;
+    font-weight: 500;
+    font-size: 16px;
+    color: white;
+    transition: .3s;
+    position: absolute;
+    z-index: 10;
+  }
+  
+  .cart .btn:active{
+    box-shadow: none;
+    transform: translateY(5px);
+  }
+  .cart .btn .bx {
+    font-size: 24px;
+  }
+
+  .friendBorder {
+    border-radius: 0.2rem;
+    margin-top: 3rem;
+    margin-right: auto;
+    margin-left: auto;
+    width: 50%;
+    border-width: 5px;
+    border-color: var(--invert-bg-color);
+    border: 2px solid;
+    box-sizing: border-box;
+    display: block;
+    padding: 20px;
+  }
+  
+  .night .friendBorder {
+    border-color: white;
+  }
+
+.centerDivElement{
+    display: flex;
+    margin: auto;
+    margin-top: 1%;
+  }
+
+.profileBorder{
+    border: 5px solid var(--primary-color);
+    border-width: 5px; border-radius: .3rem;
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    margin-top: 3rem;
+    margin-left: auto;
+    margin-right: auto;
+    width: 35%;
+}
+
+.profileBorder::before {
+    box-sizing: border-box;
+}
+
+.btnFriend{
+    color: #fff;
+    background-color: #33658A;
+    border-color: #33658A;
+    border-radius: 5px;
+}
+
+.btnSearchFriend{
+    color: #fff;
+    background-color: #ed874e;
+    border-color: #ed874e;
+    border-radius: 10px;
+}
+
+.friendRequest {
+    font-weight: 700;
+    flex: 1 1 auto;
+}
+
+.night .friendRequest {
+    color:white;
+}
+
+.accept {
+    margin-right: 1.5rem;
+    color:green
+    
+}
+
+.night .accept {
+    color:rgb(70, 186, 70)
+}
+
+.decline {
+    color: red
+}
+
+.night .decline {
+    color:rgb(240, 59, 59);
+}
+
+/* MIGHT WANT TO MAKE A REALLY COOL ANCHOR POINT SCROLL, DO */
+html {
+	scroll-behavior: smooth;
+  scroll-padding-top: 100px;
+}
+
+/**
+ * Disable smooth scrolling when users have prefers-reduced-motion enabled
+ */
+ @media screen and (prefers-reduced-motion: reduce) {
+	html {
+		scroll-behavior: auto;
+	}
+}
+
+/* scrollbar */
+::-webkit-scrollbar {
+    width: 12px;
+  }
+  ::-webkit-scrollbar-thumb {
+    background-clip: content-box;
+    background-color: #ed874e;
+    background-image: linear-gradient(#ed874e, #3F88C5);
+    border: 2px solid transparent;
+    border-radius: 10px;
+    z-index: -1;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--white-color)
+  }
+  .night::-webkit-scrollbar-track {
+    background: var(--invert-bg-color)
+  }
+
+  @media (min-width: 1720px) {
+    .headBlock {
+        height: 7%;
+
+    }
+    .intro .btn{
+        top: 65%;
+        left: 21.5%;
+    }
+  }
+
+  @media (max-width: 1023px) {
+    .headBlock {
+        height: 10%;
+
+    }
+    .intro .btn{
+        top: 80%;
+        left: 13%;
+    }
+  }
+
+.classBorder {
+    font-size: 14px;
+    padding-left: 0rem;
+    padding-top: .25rem;
+    padding-bottom: .25rem;
+    color: black;
+    border-bottom: 2rem solid;
+    border-width: 3px;
+    width: 95%;
+    border-image: 
+    linear-gradient(
+    45deg, 
+    #B82E1F, 
+    #F2C17D) 1;
+    }
+
+.displayClass {
+    display: inline;
+    text-align: left;
+    padding: 0;
+}
+
+.night .displayClass {
+    color: white;
+}
+.displayClass:nth-child(1) {
+    width: 5%;
+}
+
+.displayClass:nth-child(2) {
+    width: 17%;
+}
+
+.displayClass:nth-child(3) {
+    width: 8%;
+}
+
+.displayClass:nth-child(4) {
+    width: 15%;
+}
+.displayClass:nth-child(7) {
+    width: 20%;
+}
+.displayClass:nth-child(8) {
+    width: 10%;
+}
+
+.backCart {
+    color:black;
+    display:inline-flex;
+    font-weight:bold;
+    margin-right:1.5rem;
+    float: right;
+}
+.night .backCart {
+    color:white;
+}
+
+.dropdownItem {
+    display: block;
+    width: 100%;
+    padding: 0.25rem 1rem;
+    clear: both;
+    font-weight: 400;
+    color: #212529;
+    text-align: inherit;
+    text-decoration: none;
+    white-space: nowrap;
+    background-color: transparent;
+    border: 0;
+}
+
+.night .dropdownItem {
+    color:var(--text-color);
+}

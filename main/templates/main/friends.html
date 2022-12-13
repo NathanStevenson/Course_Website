@@ -1,0 +1,28 @@
+{% extends 'main/index.html' %}
+    {% block content %}
+    <h1 class="text-center"> {{theUser.name}}'s Friends &nbsp <i class="fas fa-user-friends" style="font-size:50px;"></i></h1>
+    {% for friend in allFriends %}
+    <div class="profileBorder">
+        {% comment %} Add a back button if the user is looking at someone else profile {% endcomment %}
+        <h1 class="text-center">{{ friend.name }}</h1>
+        {% comment %} Displays each users profile and their friends {% endcomment %}
+        <p class='my-1 fw-bold d-inline-block'><b style="color:ed874e">Friends: </b>{{friend.numFriends}}</p>
+        <div>
+            <p class='my-1 d-inline-block'> <b style="color:ed874e">Email: </b> {{friend.email}}</p>
+            <br>
+            <p class='my-1 d-inline-block'> <b style="color:ed874e"> Major: </b> {{friend.major}}</p>
+            <p class='my-1 fd-inline-block'> <b style="color:ed874e">Graduation Year: </b>{{friend.graduationYear}}</p>
+        </div>
+        <p class='my-1 fw-bold'><b style="color:ed874e">Summary: </b></p>
+        <p class="border rounded-3 p-2">{{ friend.summary }}</p>
+        
+        {% comment %} Viewing a friends schedule {% endcomment %}
+        <div class='d-flex justify-content-between'>
+            <a class="fw-bold" style='color:33658A;' href="/main/viewschedule/{{friend.id}}/">View Schedule</a>
+            <a class="fw-bold text-danger" href='/main/removefriend/{{friend.id}}/'>Remove Friend</a>
+        </div>
+    </div>
+        {% endfor %}
+
+    {% endblock content %}
+    
